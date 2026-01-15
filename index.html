@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moda Global - Revistas de Moda en Español y Latinoamérica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f7f7;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(to right, #1a1a2e, #16213e);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #f8c8dc, #a2d2ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .language-switcher {
+            margin-top: 1rem;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            margin: 0 0.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: #e63946;
+            border-color: #e63946;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .nav-links a:hover {
+            color: #e63946;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1558769132-cb1a40ed0ada?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 3rem 0 2rem;
+            color: #16213e;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: #e63946;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .intro-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .region-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 2px solid #ddd;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            border-color: #e63946;
+            color: #e63946;
+        }
+
+        .filter-btn.active {
+            background-color: #e63946;
+            border-color: #e63946;
+            color: white;
+        }
+
+        .magazines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .magazine-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .magazine-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .magazine-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .magazine-content {
+            padding: 1.5rem;
+        }
+
+        .magazine-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #16213e;
+        }
+
+        .magazine-country {
+            display: inline-block;
+            background-color: #f0f0f0;
+            color: #555;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .magazine-lang {
+            display: inline-block;
+            background-color: #e1f5fe;
+            color: #0277bd;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+
+        .magazine-content p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .magazine-link {
+            display: inline-block;
+            background-color: #1a1a2e;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .magazine-link:hover {
+            background-color: #e63946;
+        }
+
+        .highlight {
+            border: 3px solid #e63946;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin: 3rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e63946;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .trends {
+            background-color: #f0f2f5;
+            padding: 3rem 0;
+            margin: 3rem 0;
+        }
+
+        .trends-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .trend-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .trend-card i {
+            font-size: 2rem;
+            color: #e63946;
+            margin-bottom: 1rem;
+        }
+
+        .trend-card h3 {
+            margin-bottom: 0.8rem;
+            color: #16213e;
+        }
+
+        footer {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: #f8c8dc;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            margin-bottom: 0.7rem;
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #a2d2ff;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #2d3047;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .search-box input {
+            padding: 0.8rem 1.2rem;
+            width: 300px;
+            border: 2px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            background-color: #e63946;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .region-highlight {
+            background-color: #fff9e6;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 5px solid #ffcc00;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+            }
+            
+            .nav-links li {
+                margin: 0 0.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .magazines-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .region-filter {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 80%;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">MODA GLOBAL</div>
+            <p class="tagline">Revistas de moda en español y de todo el mundo</p>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="all">Todas</button>
+                <button class="lang-btn" data-lang="español">Español</button>
+                <button class="lang-btn" data-lang="latinoamerica">Latinoamérica</button>
+                <button class="lang-btn" data-lang="internacional">Internacional</button>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container nav-container">
+            <div class="logo-small">VOGUE</div>
+            <ul class="nav-links">
+                <li><a href="#revistas"><i class="fas fa-book"></i> Revistas</a></li>
+                <li><a href="#latinoamerica"><i class="fas fa-globe-americas"></i> Latinoamérica</a></li>
+                <li><a href="#espanol"><i class="fas fa-language"></i> Español</a></li>
+                <li><a href="#tendencias"><i class="fas fa-chart-line"></i> Tendencias</a></li>
+                <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Moda en Español y Latinoamérica</h1>
+            <p>Descubre las revistas de moda más importantes de habla hispana y las publicaciones latinoamericanas que están marcando tendencia en el mundo.</p>
+            <div class="search-box">
+                <input type="text" placeholder="Buscar revistas por país, nombre o idioma...">
+                <button><i class="fas fa-search"></i> Buscar</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="revistas">
+            <h2 class="section-title">Revistas de Moda del Mundo</h2>
+            <p class="intro-text">Explora las publicaciones más influyentes en el mundo de la moda, con especial énfasis en revistas en español y de Latinoamérica. Filtra por región o idioma para encontrar lo que buscas.</p>
+            
+            <div class="region-filter">
+                <button class="filter-btn active" data-region="all">Todas las Revistas</button>
+                <button class="filter-btn" data-region="espanol">En Español</button>
+                <button class="filter-btn" data-region="latinoamerica">Latinoamérica</button>
+                <button class="filter-btn" data-region="europa">Europa</button>
+                <button class="filter-btn" data-region="usa">Estados Unidos</button>
+            </div>
+            
+            <div class="region-highlight">
+                <h3 style="color: #16213e; margin-bottom: 1rem;"><i class="fas fa-star"></i> Destacadas en Español</h3>
+                <p>La moda en español tiene una rica tradición y una creciente influencia global. Revistas como Vogue México, Harper's Bazaar Argentina y Elle España son referentes internacionales que combinan tendencias globales con identidad cultural local.</p>
+            </div>
+            
+            <div class="magazines-grid" id="magazines-container">
+                <!-- Las revistas se cargarán aquí con JavaScript -->
+            </div>
+        </section>
+
+        <section id="latinoamerica">
+            <h2 class="section-title">Moda Latinoamericana</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Países Latinoamericanos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">40+</div>
+                    <div class="stat-label">Revistas en la Región</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50M+</div>
+                    <div class="stat-label">Lectores Hispanohablantes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Diseñadores Destacados</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="espanol">
+            <h2 class="section-title">Revistas en Español</h2>
+            <p class="intro-text">El español es el segundo idioma más hablado del mundo y las revistas de moda en español tienen una audiencia global. Estas publicaciones muestran la diversidad cultural y creativa del mundo hispanohablante.</p>
+            
+            <div class="trends">
+                <div class="container">
+                    <div class="trends-container">
+                        <div class="trend-card">
+                            <i class="fas fa-palette"></i>
+                            <h3>Identidad Cultural</h3>
+                            <p>Las revistas en español destacan la riqueza cultural, tradiciones y colores de los países hispanohablantes en la moda.</p>
+                        </div>
+                        <div class="trend-card">
+                            <i class="fas fa-users"></i>
+                            <h3>Diversidad</h3>
+                            <p>Representación de todas las tallas, edades y etnias en las publicaciones de moda en español.</p>
+                        </div>
+                        <div class="trend-card">
+                            <i class="fas fa-leaf"></i>
+                            <h3>Sostenibilidad</h3>
+                            <p>Enfoque en moda ética, materiales sostenibles y producción local en Latinoamérica y España.</p>
+                        </div>
+                        <div class="trend-card">
+                            <i class="fas fa-tshirt"></i>
+                            <h3>Diseñadores Locales</h3>
+                            <p>Promoción de talento emergente y diseñadores establecidos del mundo hispanohablante.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Moda Global en Español</h3>
+                    <p>Tu portal integral a las revistas de moda en español y de Latinoamérica. Conectamos a los amantes de la moda con las mejores publicaciones en nuestro idioma.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Revistas por Región</h3>
+                    <a href="#latinoamerica">México y Centroamérica</a>
+                    <a href="#latinoamerica">Sudamérica</a>
+                    <a href="#espanol">España</a>
+                    <a href="#revistas">Estados Unidos (en español)</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-envelope"></i> info@modaglobal.es</p>
+                    <p><i class="fas fa-phone"></i> +34 91 123 4567</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Madrid, Buenos Aires, Ciudad de México</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Síguenos</h3>
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
+                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Moda Global en Español. Todos los derechos reservados. | Diseñado con pasión por la moda hispanohablante
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Datos de revistas de moda con enfoque en español y Latinoamérica
+        const magazines = [
+            // Revistas en español de España
+            {
+                name: "Vogue España",
+                country: "España",
+                language: "Español",
+                region: "europa",
+                description: "La edición española de la revista de moda más influyente del mundo, con contenido adaptado al mercado ibérico.",
+                link: "https://www.vogue.es",
+                image: "https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                highlight: true
+            },
+            {
+                name: "Elle España",
+                country: "España",
+                language: "Español",
+                region: "europa",
+                description: "La versión española de la famosa revista francesa, con lo último en moda, belleza y lifestyle.",
+                link: "https://www.elle.es",
+                image: "https://images.unsplash.com/photo-1558769132-cb1a40ed0ada?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                highlight: true
+            },
+            {
+                name: "Harper's Bazaar España",
+                country: "España",
+                language: "Español",
+                region: "europa",
+                description: "La edición española de esta icónica revista, enfocada en moda de lujo y estilo de vida sofisticado.",
+                link: "https://www.harpersbazaar.es",
+                image: "https://images.unsplash.com/photo-1586985288123-a1687f1c4d42?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                name: "Telva",
+                country: "España",
+                language: "Español",
+                region: "europa",
+                description: "Una de las revistas de moda más antiguas y prestigiosas de España, fundada en 1963.",
+                link: "https://www.telva.com",
+                image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1331&q=80",
+                highlight: true
+            },
+            
+            // Revistas de México y Centroamérica
+            {
+                name: "Vogue México",
+                country: "México",
+                language: "Español",
+                region: "latinoamerica",
+                description: "La edición mexicana de Vogue, que combina moda internacional con la rica cultura y tradiciones mexicanas.",
+                link: "https://www.vogue.mx",
+                image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80",
+                highlight: true
+            },
+            {
+                name: "Elle México",
+                country: "México",
+                language: "Español",
+                region: "latinoamerica",
+                description: "La versión mexicana de Elle, destacando diseñadores locales y tendencias globales.",
+                link: "https://www.elle.mx",
+                image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                name: "Harper's Bazaar México",
+                country: "México",
+                language: "Español",
+                region: "latinoamerica",
+                description: "La edición mexicana de Harper's Bazaar, con enfoque en moda de alta gama y estilo de vida.",
+                link: "https://www.harpersbazaar.mx",
+                image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80"
+            },
+            
+            // Revistas de Sudamérica
+            {
+                name: "Vogue Brasil",
+                country: "Brasil",
+                language: "Portugués",
+                region: "latinoamerica",
+                description: "Aunque en portugués, es una de las ediciones más importantes de Vogue en Latinoamérica.",
+                link: "https://www.vogue.globo.com",
+                image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80"
+            },
+            {
+                name: "Elle Argentina",
+                country: "Argentina",
+                language: "Español",
+                region: "latinoamerica",
+                description: "La edición argentina de Elle, con el sello distintivo de la moda porteña y tendencias locales.",
+                link: "https://www.elle.com.ar",
+                image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80"
+            },
+            {
+                name: "Harper's Bazaar Argentina",
+                country: "Argentina",
+                language: "Español",
+                region: "latinoamerica",
+                description: "La versión argentina de esta prestigiosa revista, con contenido adaptado al mercado local.",
+                link: "https://www.harpersbazaar.com.ar",
+                image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80",
+                highlight: true
+            },
+            {
+                name: "Caras",
+                country: "Argentina",
+                language: "Español",
+                region: "latinoamerica",
+                description: "Revista argentina de moda, famosos y lifestyle, muy popular en varios países de Latinoamérica.",
+                link: "https://www.caras.com.ar",
+                image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                name: "Paula",
+                country: "Chile",
+                language: "Español",
+                region: "latinoamerica",
+                description: "Revista chilena de moda y estilo de vida, con gran influencia en el cono sur.",
+                link: "https://www.paula.cl",
+                image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80"
+            },
+            
+            // Revistas internacionales en inglés
+            {
+                name: "Vogue US",
+                country: "Estados Unidos",
+                language: "Inglés",
+                region: "usa",
+                description: "La edición original de la revista de moda más influyente del mundo.",
+                link: "https://www.vogue.com",
+                image: "https://images.unsplash.com/photo-1583300157706-6290910c23a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                name: "Elle US",
+                country: "Estados Unidos",
+                language: "Inglés",
+                region: "usa",
+                description: "La edición estadounidense de la famosa revista francesa de moda.",
+                link: "https://www.elle.com",
+                image: "https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                name: "Vogue Italia",
+                country: "Italia",
+                language: "Italiano",
+                region: "europa",
+                description: "Considerada la edición más artística e influyente de todas las Vogue internacionales.",
+                link: "https://www.vogue.it",
+                image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                name: "Vogue France",
+                country: "Francia",
+                language: "Francés",
+                region: "europa",
+                description: "La edición francesa de Vogue, desde la capital mundial de la moda.",
+                link: "https://www.vogue.fr",
+                image: "https://images.unsplash.com/photo-1580996445440-dc5e575dd2c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                name: "Vogue Japan",
+                country: "Japón",
+                language: "Japonés",
+                region: "asia",
+                description: "La influyente edición japonesa de Vogue, conocida por su estética única.",
+                link: "https://www.vogue.co.jp",
+                image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80"
+            }
+        ];
+
+        // Función para mostrar las revistas en el grid
+        function displayMagazines(filterRegion = 'all', filterLang = 'all') {
+            const container = document.getElementById('magazines-container');
+            container.innerHTML = '';
+            
+            let filteredMagazines = magazines;
+            
+            // Filtrar por región
+            if (filterRegion !== 'all') {
+                filteredMagazines = filteredMagazines.filter(magazine => magazine.region === filterRegion);
+            }
+            
+            // Filtrar por idioma
+            if (filterLang !== 'all') {
+                if (filterLang === 'español') {
+                    filteredMagazines = filteredMagazines.filter(magazine => magazine.language === 'Español');
+                } else if (filterLang === 'latinoamerica') {
+                    filteredMagazines = filteredMagazines.filter(magazine => magazine.region === 'latinoamerica');
+                } else if (filterLang === 'internacional') {
+                    filteredMagazines = filteredMagazines.filter(magazine => magazine.language !== 'Español');
+                }
+            }
+            
+            filteredMagazines.forEach(magazine => {
+                const magazineCard = document.createElement('div');
+                magazineCard.className = 'magazine-card';
+                if (magazine.highlight) {
+                    magazineCard.classList.add('highlight');
+                }
+                
+                magazineCard.innerHTML = `
+                    <div class="magazine-img" style="background-image: url('${magazine.image}')"></div>
+                    <div class="magazine-content">
+                        <h3>${magazine.name}</h3>
+                        <span class="magazine-country">${magazine.country}</span>
+                        <span class="magazine-lang">${magazine.language}</span>
+                        <p>${magazine.description}</p>
+                        <a href="${magazine.link}" target="_blank" class="magazine-link">Visitar Sitio Web</a>
+                    </div>
+                `;
+                
+                container.appendChild(magazineCard);
+            });
+        }
+
+        // Función para filtrar revistas
+        function setupFilters() {
+            // Filtros por región
+            const regionButtons = document.querySelectorAll('.filter-btn');
+            regionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    regionButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const region = this.getAttribute('data-region');
+                    const activeLangButton = document.querySelector('.lang-btn.active');
+                    const lang = activeLangButton ? activeLangButton.getAttribute('data-lang') : 'all';
+                    
+                    displayMagazines(region, lang);
+                });
+            });
+            
+            // Filtros por idioma
+            const langButtons = document.querySelectorAll('.lang-btn');
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const lang = this.getAttribute('data-lang');
+                    const activeRegionButton = document.querySelector('.filter-btn.active');
+                    const region = activeRegionButton ? activeRegionButton.getAttribute('data-region') : 'all';
+                    
+                    displayMagazines(region, lang);
+                });
+            });
+            
+            // Filtro de búsqueda
+            const searchInput = document.querySelector('.search-box input');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const filteredMagazines = magazines.filter(magazine => 
+                    magazine.name.toLowerCase().includes(searchTerm) || 
+                    magazine.country.toLowerCase().includes(searchTerm) ||
+                    magazine.language.toLowerCase().includes(searchTerm) ||
+                    magazine.description.toLowerCase().includes(searchTerm)
+                );
+                
+                const container = document.getElementById('magazines-container');
+                container.innerHTML = '';
+                
+                filteredMagazines.forEach(magazine => {
+                    const magazineCard = document.createElement('div');
+                    magazineCard.className = 'magazine-card';
+                    if (magazine.highlight) {
+                        magazineCard.classList.add('highlight');
+                    }
+                    
+                    magazineCard.innerHTML = `
+                        <div class="magazine-img" style="background-image: url('${magazine.image}')"></div>
+                        <div class="magazine-content">
+                            <h3>${magazine.name}</h3>
+                            <span class="magazine-country">${magazine.country}</span>
+                            <span class="magazine-lang">${magazine.language}</span>
+                            <p>${magazine.description}</p>
+                            <a href="${magazine.link}" target="_blank" class="magazine-link">Visitar Sitio Web</a>
+                        </div>
+                    `;
+                    
+                    container.appendChild(magazineCard);
+                });
+            });
+        }
+
+        // Inicializar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            displayMagazines();
+            setupFilters();
+            
+            // Smooth scrolling para los enlaces de navegación
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
